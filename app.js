@@ -5,17 +5,35 @@ const app = express();
 const cors = require("cors");
 const port = 7700;
 
+// Define allowed origins (adjust these for your actual frontend domains)
+const allowedOrigins = [
+  "http://localhost:7700",
+  // "https://your-production-domain.com", // production
+];
+
+// !origin means: this request probably isn't coming from a browser with a cross-origin source → allow it.
+// allowedOrigins.includes(origin) ->This checks: “Is the request’s origin listed in our allowedOrigins array?”
 const corsOptions = {
-  origin: "*", // This is too permissive for production
-  credentials: false,
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true); //Tells CORS: this origin is allowed.
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  // Allows cookies, authorization headers, and TLS client certificates.
+  credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
+
+  //Only these headers can be sent from the frontend.
+  allowedHeaders: ["Content-Type", "Authorization"],
+
+  // Ensures a 204 No Content response is returned for **preflight requests(you're allowed to proceed) ,
   optionsSuccessStatus: 204,
 };
 
+// Apply CORS globally
 app.use(cors(corsOptions));
-app.options("*", cors(corsOptions)); // This should handle preflight
-
 app.use(express.json());
 
 //  routes middleware file
