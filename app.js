@@ -7,8 +7,8 @@ const port = 7700;
 
 // Define allowed origins (adjust these for your actual frontend domains)
 const allowedOrigins = [
-  "http://localhost:7700",
-  // "https://your-production-domain.com", // production
+  "http://localhost:5173",
+  "https://frontend.tsionsimegne.com", // production
 ];
 
 // !origin means: this request probably isn't coming from a browser with a cross-origin source → allow it.
