@@ -109,6 +109,6 @@ rating_id int(11) NOT NULL AUTO_INCREMENT,
 });
 
 //for table creation port number only
-app.listen(2026, () => console.log("listening to: port localhost:2026,"));
+// app.listen(2026, () => console.log("listening to: port localhost:2026,"));
 
 module.exports = dbConnection.promise();
